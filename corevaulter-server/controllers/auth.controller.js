@@ -1,12 +1,8 @@
-import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import User from "../models/User.model";
+const jwt = require("jsonwebtoken");
+const User = require("../models/User.model");
 
-export interface AuthenticatedRequest extends Request {
-  userId?: string;
-}
-
-export const register = async (req: Request, res: Response): Promise<void> => {
+// Register Controller
+const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -22,13 +18,10 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET is not defined in environment variables");
     }
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: "7d",
-      }
-    );
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.status(201).json({
       user: { id: user._id, name: user.name, email: user.email },
@@ -40,7 +33,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+// Login Controller
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -59,13 +53,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET is not defined in environment variables");
     }
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: "7d",
-      }
-    );
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.json({
       user: { id: user._id, name: user.name, email: user.email },
@@ -77,10 +68,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const getCurrentUser = async (
-  req: AuthenticatedRequest,
-  res: Response
-): Promise<void> => {
+// Get Current User Controller
+const getCurrentUser = async (req, res) => {
   try {
     if (!req.userId) {
       res.status(401).json({ message: "Not authenticated" });
@@ -98,4 +87,10 @@ export const getCurrentUser = async (
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+module.exports = {
+  register,
+  login,
+  getCurrentUser,
 };

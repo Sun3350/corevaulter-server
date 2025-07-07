@@ -1,14 +1,14 @@
 // ─────────────────────────────────────────────────────────────
 //  Imports
 // ─────────────────────────────────────────────────────────────
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import rateLimit from "express-rate-limit";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import authRoutes from "../routes/auth.routes";
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const rateLimit = require("express-rate-limit");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const authRoutes = require("../routes/auth.routes");
 
 // ─────────────────────────────────────────────────────────────
 //  Config & Env

@@ -1,12 +1,11 @@
 {
   "name": "corevaulter-server",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon api/index.ts",
-    "dev": "nodemon api/index.ts",
-    "build": "tsc",
-    "lint": "eslint . --ext .ts,.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api/index.js",
+    "dev": "nodemon api/index.js"
   },
   "keywords": [],
   "author": "",
