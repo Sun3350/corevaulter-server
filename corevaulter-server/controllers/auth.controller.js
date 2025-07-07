@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
-const secretKey = process.env.JWT_SECRET;
+const secretKey =
+  "cc3db5a9c829149a0ca2d0430a9a638bd8e7e4b93a8afb44b2e60083cfcbec0477421021e71b06b06a97482c47f249eeef3b0834b551187061db8d90461ef719";
 
 // Register Controller
 const register = async (req, res) => {
   try {
-    console.log("Register request body:", req.body); // Log input
+    console.log("Register request body:", req.body);
 
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
