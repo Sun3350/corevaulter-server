@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
+const secretKey = process.env.JWT_SECRET;
 
 // Register Controller
 const register = async (req, res) => {
@@ -18,12 +19,12 @@ const register = async (req, res) => {
     await user.save();
     console.log("User saved successfully:", user.email); // Log success
 
-    if (!process.env.JWT_SECRET) {
+    if (!secretKey) {
       console.error("JWT_SECRET missing!"); // Log if missing
       throw new Error("JWT_SECRET is not defined");
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, secretKey, {
       expiresIn: "7d",
     });
 
@@ -54,11 +55,11 @@ const login = async (req, res) => {
       return;
     }
 
-    if (!process.env.JWT_SECRET) {
+    if (!secretKey) {
       throw new Error("JWT_SECRET is not defined in environment variables");
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, secretKey, {
       expiresIn: "7d",
     });
 
