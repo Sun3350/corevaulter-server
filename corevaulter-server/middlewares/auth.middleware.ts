@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../utils/config";
 import { AuthenticatedRequest } from "../controllers/auth.controller";
 
 export const authenticate = (
@@ -16,7 +15,18 @@ export const authenticate = (
       return;
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    if (!process.env.JWT_SECRET) {
+      res.status(500).json({ message: "JWT secret not configured" });
+      return;
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as unknown as {
+      userId: string;
+    };
+    if (!decoded || typeof decoded.userId !== "string") {
+      res.status(401).json({ message: "Invalid token payload" });
+      return;
+    }
     req.userId = decoded.userId;
     next();
   } catch (error) {
