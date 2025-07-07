@@ -54,6 +54,9 @@ app.use(
     max: 100,
   })
 );
+app.get("/", (req, res) => {
+  res.send("hello its working");
+});
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
