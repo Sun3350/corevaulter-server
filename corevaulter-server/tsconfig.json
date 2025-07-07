@@ -4,7 +4,7 @@
     "module": "commonjs",
     "target": "ES6",
     "outDir": "./dist",
-    "rootDir": "./api",
+    "rootDir": ".",
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
