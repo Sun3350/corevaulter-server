@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "node api/index.ts",
+    "start": "nodemon api/index.ts",
     "dev": "nodemon api/index.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts,.js"
