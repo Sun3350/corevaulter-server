@@ -41,7 +41,7 @@ app.set("trust proxy", 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: FRONTEND_URL,
+    origin: FRONTEND_URL || "https://corevaulter.com",
     credentials: true,
   })
 );
