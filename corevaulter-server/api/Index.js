@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI =
   process.env.MONGO_URI ||
   "mongodb+srv://corevaulter:PmWt5keAR3rGIFRG@corevaulter.eaf2e4l.mongodb.net/";
-const FRONTEND_URL = process.env.FRONTEND_URL || "https://corevaulter.com/";
+const FRONTEND_URL = "https://corevaulter.com";
 
 // ─────────────────────────────────────────────────────────────
 //  MongoDB Connection
