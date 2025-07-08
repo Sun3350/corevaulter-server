@@ -7,8 +7,9 @@ const secretKey =
 const register = async (req, res) => {
   try {
     console.log("Register request body:", req.body);
+    let { name, email, password } = req.body;
+    email = email.toLowerCase();
 
-    const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -42,17 +43,18 @@ const register = async (req, res) => {
 // Login Controller
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    email = email.toLowerCase();
 
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(400).json({ message: "Invalid credentials" });
+      res.status(404).json({ message: "User not found" });
       return;
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      res.status(400).json({ message: "Invalid credentials" });
+      res.status(400).json({ message: "Incorrect email or password" });
       return;
     }
 
