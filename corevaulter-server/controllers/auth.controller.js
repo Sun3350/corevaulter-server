@@ -18,7 +18,7 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = new User({ name, email,username,  password });
+    const user = new User({ name, email, username, password });
     await user.save();
     console.log("User saved successfully:", user.email, user.username); // Log success
 
@@ -32,7 +32,12 @@ const register = async (req, res) => {
     });
 
     res.status(201).json({
-      user: { id: user._id, name: user.name, username: user.username, email: user.email },
+      user: {
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+      },
       token,
     });
   } catch (error) {
