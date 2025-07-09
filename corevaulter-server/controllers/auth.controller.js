@@ -11,10 +11,12 @@ const register = async (req, res) => {
     email = email.toLowerCase();
     username = username.toLowerCase();
 
-    const existingUser = await User.findOne({ email, username });
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }],
+    });
 
     if (existingUser) {
-      console.log("User already exists:", email, username); // Log duplicate
+      console.log("User already exists:", email, username);
       return res.status(400).json({ message: "User already exists" });
     }
 
