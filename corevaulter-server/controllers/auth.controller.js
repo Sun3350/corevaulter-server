@@ -7,19 +7,20 @@ const secretKey =
 const register = async (req, res) => {
   try {
     console.log("Register request body:", req.body);
-    let { name, email, password } = req.body;
+    let { name, username, email, password } = req.body;
     email = email.toLowerCase();
+    username = username.toLowerCase();
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email, username });
 
     if (existingUser) {
-      console.log("User already exists:", email); // Log duplicate
+      console.log("User already exists:", email, username); // Log duplicate
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = new User({ name, email, password });
+    const user = new User({ name, email,username,  password });
     await user.save();
-    console.log("User saved successfully:", user.email); // Log success
+    console.log("User saved successfully:", user.email, user.username); // Log success
 
     if (!secretKey) {
       console.error("JWT_SECRET missing!"); // Log if missing
@@ -31,7 +32,7 @@ const register = async (req, res) => {
     });
 
     res.status(201).json({
-      user: { id: user._id, name: user.name, email: user.email },
+      user: { id: user._id, name: user.name, username: user.username, email: user.email },
       token,
     });
   } catch (error) {
@@ -43,10 +44,10 @@ const register = async (req, res) => {
 // Login Controller
 const login = async (req, res) => {
   try {
-    let { email, password } = req.body;
-    email = email.toLowerCase();
+    let { username, password } = req.body;
+    username = username.toLowerCase();
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
     if (!user) {
       res.status(404).json({ message: "User not found" });
       return;
@@ -54,7 +55,7 @@ const login = async (req, res) => {
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      res.status(400).json({ message: "Incorrect email or password" });
+      res.status(400).json({ message: "Incorrect username or password" });
       return;
     }
 
@@ -67,7 +68,12 @@ const login = async (req, res) => {
     });
 
     res.json({
-      user: { id: user._id, name: user.name, email: user.email },
+      user: {
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+      },
       token,
     });
   } catch (error) {

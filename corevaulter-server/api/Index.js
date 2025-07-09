@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI =
   process.env.MONGO_URI ||
   "mongodb+srv://corevaulter:PmWt5keAR3rGIFRG@corevaulter.eaf2e4l.mongodb.net/";
-const FRONTEND_URL = "https://corevaulter.com";
+const FRONTEND_URL = "http://localhost:5173";
 
 // ─────────────────────────────────────────────────────────────
 //  MongoDB Connection
@@ -41,7 +41,7 @@ app.set("trust proxy", 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: FRONTEND_URL || "https://corevaulter.com",
+    origin: FRONTEND_URL || "http://localhost:5173",
     credentials: true,
   })
 );
